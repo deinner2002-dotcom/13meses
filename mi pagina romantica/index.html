@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página Romántica</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #ffe6eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .lock-screen, .gallery, .final-section {
+        display: none;
+        text-align: center;
+        padding: 20px;
+    }
+    .active { display: block; }
+    .heart-lock {
+        font-size: 100px;
+        color: #ff4d6d;
+    }
+    input[type=password] {
+        padding: 10px;
+        border: 2px solid #ff4d6d;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+    button {
+        background-color: #ff4d6d;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-top: 15px;
+        cursor: pointer;
+    }
+    img {
+        max-width: 100%;
+        border-radius: 15px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+        transition: transform 0.5s ease;
+    }
+    .phrase {
+        font-size: 18px;
+        margin-top: 10px;
+        color: #b3003b;
+        font-style: italic;
+    }
+    .hearts {
+        position: absolute;
+        pointer-events: none;
+    }
+    .final-section h1 {
+        font-size: 50px;
+        color: #ff004f;
+    }
+</style>
+</head>
+<body>
+    <div class="lock-screen active">
+        <div class="heart-lock">❤️🔒</div>
+        <p>Ingresa la contraseña</p>
+        <input type="password" id="password">
+        <br>
+        <button onclick="unlock()">Abrir</button>
+    </div>
+
+    <div class="gallery">
+        <img id="photo" src="img1.jpg" alt="Foto Romántica">
+        <p class="phrase" id="phrase">Aquí irá tu frase</p>
+        <button id="nextPair">Continuar</button>
+    </div>
+
+    <div class="final-section">
+        <video id="loveVideo" controls width="100%">
+            <source src="video.mp4" type="video/mp4">
+            Tu navegador no soporta el video.
+        </video>
+        <h1 id="finalMessage">TE AMO 💖</h1>
+        <p id="finalPhrase">Aquí puedes poner tu frase final...</p>
+    </div>
+
+<script>
+    const passwordCorrecta = "12/07/24"; // Cambia tu contraseña aquí
+    const fotos = [
+        { img: "img1.jpg", frase: "tu y yo 💕" },
+        { img: "img2.jpg", frase: "un equipo" },
+        { img: "img3.jpg", frase: "Siempre juntos" },
+        { img: "img4.jpg", frase: "Eres mi todo" }
+    ];
+
+    let index = 0;
+
+    function unlock() {
+        const pass = document.getElementById("password").value;
+        if(pass === passwordCorrecta) {
+            document.querySelector(".lock-screen").classList.remove("active");
+            document.querySelector(".gallery").classList.add("active");
+            mostrarFoto();
+        } else {
+            alert("Contraseña incorrecta");
+        }
+    }
+
+    function mostrarFoto() {
+        document.getElementById("photo").src = fotos[index].img;
+        document.getElementById("phrase").innerText = fotos[index].frase;
+    }
+
+    document.getElementById("photo").addEventListener("click", () => {
+        if(index % 2 === 0 && index + 1 < fotos.length) {
+            index++;
+            mostrarFoto();
+        }
+    });
+
+    document.getElementById("nextPair").addEventListener("click", () => {
+        if(index + 1 < fotos.length) {
+            index++;
+            mostrarFoto();
+        } else {
+            document.querySelector(".gallery").classList.remove("active");
+            document.querySelector(".final-section").classList.add("active");
+        }
+    });
+</script>
+</body>
+</html>
